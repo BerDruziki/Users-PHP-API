@@ -75,5 +75,10 @@ class user {
         public function setEndereco($endereco) {
             $this->endereco = $endereco;
         }
+
+        public function loginCredencial($email, $senha) {
+            // Verifica se o email e a senha correspondem aos do usuário
+            return $this->email === $email && $this->senha === $senha;
+        }
     }
     

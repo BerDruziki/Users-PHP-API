@@ -33,6 +33,26 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'PUT' && strpos($endpoint_path, '/editar-
     require_once 'controller/userController.php';
 }
 
+// logar o usuário
+// http://localhost/php/main.php/login
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['REQUEST_URI'], '/login') !== false) {
+    // Verifica se o corpo da solicitação contém dados
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
+
+    if (isset($data['email'], $data['senha'])) {
+        require_once 'models/loginDTO.php'; // Inclui o arquivo que contém a classe loginDTO
+        require_once 'controller/loginController.php'; // Inclui o arquivo que contém a classe LoginController
+        $loginDTO = new loginDTO($data['email'], $data['senha']);
+        $loginController = new LoginController($pdo);
+        $loginController->login($loginDTO);
+    } else {
+        http_response_code(400);
+        echo json_encode(['message' => 'Os campos de email e senha são obrigatórios.']);
+    }
+}
+
+
 else {
     // Endpoint não encontrado
     http_response_code(404);
