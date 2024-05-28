@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         http_response_code(400);
-        echo json_encode(array("message" => "Todos os campos são obrigatórios."));
+        echo json_encode(array("message" => "Preencha todos os campos."));
     }
 
 } elseif ($_SERVER["REQUEST_METHOD"] == "DELETE") {
@@ -100,11 +100,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             http_response_code(400);
-            echo json_encode(array("message" => "Todos os campos dos novos dados são obrigatórios."));
+            echo json_encode(array("message" => "Preencha todos os campos."));
         }
     } else {
         http_response_code(400);
-        echo json_encode(array("message" => "ID do usuário e novos dados são obrigatórios."));
+        echo json_encode(array("message" => "ID do usuário é obrigatório."));
     }
 }
 

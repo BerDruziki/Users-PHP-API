@@ -1,4 +1,5 @@
 <?php
+
 class loginDTO {
     private $email;
     private $senha;
@@ -16,4 +17,5 @@ class loginDTO {
         return $this->senha;
     }
 }
+
 ?>

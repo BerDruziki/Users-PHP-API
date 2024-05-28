@@ -45,7 +45,20 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['REQUEST_URI'],
         require_once 'controller/loginController.php'; // Inclui o arquivo que contém a classe LoginController
         $loginDTO = new loginDTO($data['email'], $data['senha']);
         $loginController = new LoginController($pdo);
-        $loginController->login($loginDTO);
+        $response = $loginController->login($loginDTO);
+
+        // Verifica se a resposta está definida
+        if (isset($response)) {
+            // Define o código de resposta HTTP com base na resposta do controlador
+            http_response_code($response['statusCode']);
+            
+            // Retorna o corpo da resposta como JSON
+            echo json_encode($response['body']);
+        } else {
+            // Se a resposta não estiver definida, retorne um erro interno do servidor
+            http_response_code(500);
+            echo json_encode(['error' => 'Erro interno do servidor.']);
+        }
     } else {
         http_response_code(400);
         echo json_encode(['message' => 'Os campos de email e senha são obrigatórios.']);
